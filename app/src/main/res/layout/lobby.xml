@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kevpoker.Gamelobby">
+    tools:context="com.example.kevpoker.MainLobby">
 
     <TextView
         android:id="@+id/title"
@@ -19,6 +19,7 @@
         android:id="@+id/p1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player1"
         android:textSize="20dp"
         android:text="Player 1"
         android:layout_below="@+id/title"
@@ -47,6 +48,7 @@
         android:id="@+id/p2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player2"
         android:textSize="20dp"
         android:text="Player 2"
         android:layout_below="@+id/p1"
@@ -75,6 +77,7 @@
         android:id="@+id/p3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player3"
         android:textSize="20dp"
         android:text="Player 3"
         android:layout_below="@+id/p2"
@@ -103,6 +106,7 @@
         android:id="@+id/p4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player4"
         android:textSize="20dp"
         android:text="Player 4"
         android:layout_below="@+id/p3"
@@ -131,6 +135,7 @@
         android:id="@+id/p5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player5"
         android:textSize="20dp"
         android:text="Player 5"
         android:layout_below="@+id/p4"
@@ -158,6 +163,7 @@
         android:id="@+id/p6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_player6"
         android:textSize="20dp"
         android:text="Player 6"
         android:layout_below="@+id/p5"

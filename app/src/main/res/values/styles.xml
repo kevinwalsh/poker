@@ -7,5 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <array name="playerColors">
+        <item>@color/color_player1</item>
+        <item>@color/color_player2</item>
+        <item>@color/color_player3</item>
+        <item>@color/color_player4</item>
+        <item>@color/color_player5</item>
+        <item>@color/color_player6</item>
+
+    </array>
 
 </resources>

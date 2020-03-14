@@ -1,21 +1,25 @@
-package com.example.kevpoker;
+package com.example.kevpoker.model;
+
+import com.example.kevpoker.model.Card;
+import com.example.kevpoker.model.Deck;
+import com.example.kevpoker.model.Player;
 
 public class Game {
 
-    Player players[];
-    Card table[];
+    public Player players[];
+    public Card table[];
 
-    Deck mydeck;
-    int playerturn=0;
-    int raisecounter=0;         //for tracking when everyone has finished raising
-    int gamecounter=0;
-    int activeplayers;
-    int pot=0;
-    int potpledge[];                //didnt need in end, can do same thing with callpaid
-    int call=10;    //the amount each player has to call to stay in the game(?)
-    int minblind=10;
+    public Deck mydeck;
+    public int playerturn=0;
+    public int raisecounter=0;         //for tracking when everyone has finished raising
+    public int gamecounter=0;
+    public int activeplayers;
+    public int pot=0;
+    public int potpledge[];                //didnt need in end, can do same thing with callpaid
+    public int call=10;    //the amount each player has to call to stay in the game(?)
+    public int minblind=10;
 
-    String winnerstring;
+    public String winnerstring;
 
 
     public  Game (int numplayers, String names[],int chips[]){

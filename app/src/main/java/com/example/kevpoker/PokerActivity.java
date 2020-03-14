@@ -15,7 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+import com.example.kevpoker.logic.PokerGameLogic;
+import com.example.kevpoker.model.Game;
+
+public class PokerActivity extends AppCompatActivity implements OnClickListener {
 
     String names[];
     int numplayers;
@@ -39,10 +42,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     TextView tvdealer;
     int roundcounter=0;
 
+    PokerGameLogic pokerGameLogic;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //  AppContainer appContainer = ((MyApplication) getApplication()).appContainer;
+                    // one guide suggested AppContainer to store shared classes/helpers, needs Application context
+        pokerGameLogic = new PokerGameLogic();
 
         tvcard1=(TextView) findViewById(R.id.card1);
         tvcard2=(TextView) findViewById(R.id.card2);
@@ -149,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             case R.id.b4:       //reset
                 int requiredcards = 5+2;        //easier to just set table + one player
-                Intent a = new Intent(MainActivity.this, debug.class);
+                Intent a = new Intent(PokerActivity.this, debug.class);
                 a.putExtra("cards", requiredcards);
                 startActivityForResult(a,0);
                 break;
@@ -177,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             System.out.println("round "+roundcounter+" finished, move to next stage");
             nextround();
         }
+        pokerGameLogic.signOfLife();
     }
 
     public void endoldgame(){
@@ -247,7 +255,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         tvcard6.setText(mygame.players[mygame.playerturn].cards[0].value);
         tvcard7.setText(mygame.players[mygame.playerturn].cards[1].value);
         tvplayername.setText(mygame.players[mygame.playerturn].name);
-        tvplayername.setTextColor(mygame.players[mygame.playerturn].colors[mygame.playerturn]);
+        int[] f = getPlayerColors();
+        tvplayername.setTextColor(f[mygame.playerturn]);
 
         tvpot.setText("Current Pot: "+mygame.pot);
         tvplayerchips.setText("Chips: "+mygame.players[mygame.playerturn].chips);
@@ -309,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     public void toastmessage (String message) {
 
         // Toast.makeText(context,mychars,duration);
-        Toast toast= Toast.makeText(MainActivity.this,message, Toast.LENGTH_SHORT);
+        Toast toast= Toast.makeText(PokerActivity.this,message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,0,200);
         toast.show();
     }
@@ -360,6 +369,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
         return false;
     }
+
+    public int[] getPlayerColors(){
+                    // TODO move this to a shared class
+        return getResources().getIntArray(R.array.playerColors);
+    }
+
 
 }
 

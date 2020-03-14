@@ -13,13 +13,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.kevpoker.view.LobbyPlayerViewModel;
 
-public class Gamelobbyxml extends AppCompatActivity implements OnClickListener {
+
+public class MainLobby extends AppCompatActivity implements OnClickListener {
                             // TODO rename & redesign this; bad naming convention at least
-    static int colors[]={Color.RED, Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.parseColor("#ff8c00")};
-
+   // static int colors[]={Color.RED, Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.parseColor("#ff8c00")};
+                                    //dont need: moved to @Values/Colors, and referenced directly in XML layout
     int ids=1;
-    Lobbyplayer p[];
+    LobbyPlayerViewModel p[];
    // String restype="t";         //resource type? set to T,E,B, etc for textview, button?
                                     // OR! use p/n/c as per xml.    (player, name, chips)
 
@@ -63,14 +65,12 @@ public class Gamelobbyxml extends AppCompatActivity implements OnClickListener {
        setContentView((R.layout.lobby));
 
         title = (TextView) findViewById(R.id.title);
-        p = new Lobbyplayer[6];
+        p = new LobbyPlayerViewModel[6];
         for (int i=0;i<6;i++){
-            p[i]= new Lobbyplayer();
+            p[i]= new LobbyPlayerViewModel();
             p[i].p = (TextView) findViewById(convertid("p",i+1));
             p[i].n = (EditText) findViewById(convertid("n",i+1));
             p[i].c = (EditText) findViewById(convertid("c",i+1));
-
-            p[i].p.setTextColor(colors[i]);
 
             if (i>count-1){           //more than N players
                 p[i].p.setVisibility(View.INVISIBLE);
@@ -170,5 +170,7 @@ public class Gamelobbyxml extends AppCompatActivity implements OnClickListener {
             }
         }
     }
+
+
 
 }

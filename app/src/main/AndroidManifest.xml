@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Gamelobbyxml">
+        <activity android:name=".MainLobby">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name="com.example.kevpoker.MainActivity"
+            android:name="com.example.kevpoker.PokerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>

@@ -1,20 +1,22 @@
-package com.example.kevpoker;
+package com.example.kevpoker.model;
 
 import android.graphics.Color;
 
+import com.example.kevpoker.model.Card;
+
 public class Player {
-    Card cards[];
-    static int colors[]={Color.RED, Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.parseColor("#ff8c00")};
-    String playerstatus;
-    int chips;
-    int callpaid;           // so we can just do addtopot(game.call - player.callpaid), prob easiest method
-    String name;
+    public Card cards[];
+    public static int colors[]={Color.RED, Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.parseColor("#ff8c00")};
+    public String playerstatus;
+    public int chips;
+    public int callpaid;           // so we can just do addtopot(game.call - player.callpaid), prob easiest method
+    public String name;
   //  int suitcounter[];            //didnt need! have it declared internally in checkpoints()
 
-    static String hand[]={"n/a","highcard","pair","twopair","3ofKind","straight","flush","fullhouse","4ofKind","straightflush"};
-    int handpoints=0; // 1=highcard, 2=pair, 3= twopairs, 4=3ofKind, 5=straight, 6=flush, 7=FHouse, 8=4ofKind, 9=strFl,10=RFl
+    public static String hand[]={"n/a","highcard","pair","twopair","3ofKind","straight","flush","fullhouse","4ofKind","straightflush"};
+    public int handpoints=0; // 1=highcard, 2=pair, 3= twopairs, 4=3ofKind, 5=straight, 6=flush, 7=FHouse, 8=4ofKind, 9=strFl,10=RFl
                         //
-    int highcard=-1;       // any extra factors that may affect who wins pot (if 2 players both have pair, straight, etc)
+    public int highcard=-1;       // any extra factors that may affect who wins pot (if 2 players both have pair, straight, etc)
                         // e.g. 8 for pair/triple 8's, 8 as high end of straight, or SUM of flush.
                         // actually, weird workaround, but multiply x10 for first pairs, etc. for FH and 2x pairs, we can workaround to
                         // save 2 numbers together. ie pair 8 = 80, pair 8 and 2 is 82

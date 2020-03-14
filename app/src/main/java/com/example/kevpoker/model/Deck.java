@@ -1,9 +1,11 @@
-package com.example.kevpoker;
+package com.example.kevpoker.model;
+
+import com.example.kevpoker.model.Card;
 
 import java.util.Random;
 
 public class Deck {
-    int deckCounter=0;
+    public int deckCounter=0;
     Card cards[];
     //String[] suits={"Clubs","Diam","Hearts","Spades "};      //lowest rank to highest
     String[] suits={"♣","♦","❤","♠"};      //found handy ascii symbols
