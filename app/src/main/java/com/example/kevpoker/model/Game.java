@@ -1,8 +1,13 @@
 package com.example.kevpoker.model;
 
+import com.example.kevpoker.logic.PokerScoreCountLogic;
 import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.Deck;
 import com.example.kevpoker.model.Player;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Game {
 
@@ -75,6 +80,13 @@ public class Game {
         temp[5]= card1;
         temp[6]= card2;
 
+        PokerScoreCountLogic pokerScoreCountLogic = new PokerScoreCountLogic();
+            // pokerScoreCountLogic.checkPoints(table,new Card[] {card1, card2});       // old array
+            List<Card> tablelist = Arrays.asList(table);
+            List<Card> playercards = new ArrayList<Card>();playercards.add(card1); playercards.add(card2);
+            pokerScoreCountLogic.checkPoints(tablelist,playercards);
+
+
         boolean sorted=false;
         int sortcount=0;
         while ( sorted==false){
@@ -92,7 +104,7 @@ public class Game {
     public void calcpoints(){     //to calculate hands
         for (int i=0;i<players.length;i++){             //initial prob here! "player" cards will be mixed in after sort!
            Card temp[];
-            temp=sortcards(players[i].cards[0],players[i].cards[1]);
+            temp=sortcards(players[i].cards.get(0),players[i].cards.get(1));
             players[i].checkpoints(temp);
 
         }       //end of player i pointcount
@@ -132,7 +144,7 @@ public class Game {
          //   System.out.println(String.format("rank %d, player %d,name %s, score %d",q,playerid[q],players[playerid[q]].name,playerscores[q]));
             System.out.println(String.format("%d\t\t%d\t\t%s\t",q,playerid[q],players[playerid[q]].name)+
                     String.format("\t%s\t",players[playerid[q]].playerstatus)+
-                    String.format("%s \t%s \t",players[playerid[q]].cards[0].value,players[playerid[q]].cards[1].value)+
+                    String.format("%s \t%s \t",players[playerid[q]].cards.get(0).value,players[playerid[q]].cards.get(1).value)+
                     String.format("%d\t%d\t",players[playerid[q]].callpaid, playerscores[q])+
                     String.format("%d\t\t%d\t\t%s  \t",players[playerid[q]].handpoints,players[playerid[q]].highcard,players[q].hand[players[playerid[q]].handpoints]));
 
@@ -170,7 +182,7 @@ public class Game {
     public void printscores(Player players[]){
         for (int i=0;i<players.length;i++) {
            System.out.println(String.format("player %d=%s, cards= %s %s, chips=%d, callpaid=%d ", i,players[i].name,
-                   players[i].cards[0].value, players[i].cards[1].value,players[i].chips,players[i].callpaid));
+                   players[i].cards.get(0).value, players[i].cards.get(1).value,players[i].chips,players[i].callpaid));
            System.out.println(String.format("player %d= %s, *POINTS*=%d, hand=%s, highcard=%d, status=%s",
            i, players[i].name, players[i].handpoints, players[i].hand[players[i].handpoints], players[i].highcard, players[i].playerstatus));
        }

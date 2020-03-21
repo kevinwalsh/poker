@@ -4,8 +4,12 @@ import android.graphics.Color;
 
 import com.example.kevpoker.model.Card;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
-    public Card cards[];
+    //public Card cardsarray[];
+    public List<Card> cards;
     public static int colors[]={Color.RED, Color.BLUE,Color.GREEN,Color.MAGENTA,Color.CYAN,Color.parseColor("#ff8c00")};
     public String playerstatus;
     public int chips;
@@ -24,11 +28,54 @@ public class Player {
 
      public Player (String playername, int playerchips){
          name = playername;
-         cards= new Card[2];
+       //  cardsarray= new Card[2];
+         cards = new ArrayList<Card>();
          playerstatus="ACTIVE";
          chips=playerchips;
          callpaid=0;
      }
+
+    public int Call(int callToPay){
+         if(chips > callToPay){
+             callpaid = callToPay;
+         }
+         else{
+             callpaid = chips;
+             this.playerstatus = "ALLIN";
+
+         }
+         return 1;
+    }
+
+    public void Fold(){
+        this.playerstatus = "FOLD";
+    }
+
+    public boolean Bust(){
+        if(chips>0){
+            return false;
+        }
+        else{
+            this.playerstatus = "BUST";
+            return true;
+        }
+     }
+
+    public int Payout(int winnerCall){
+         if(winnerCall <= callpaid){        // only take what player has IF lessthan winner
+             int temp = callpaid;
+             chips -= temp;
+             callpaid-= temp;
+             return temp;
+         }
+         else {
+             chips-=winnerCall;
+             callpaid-= winnerCall;
+             return winnerCall;
+         }
+    }
+
+     // -----------------------------------------
 
     public void checkpoints(Card temp[]){
         int suitcounter[] ={0,0,0,0};
@@ -115,7 +162,7 @@ public class Player {
             else if (maxstraight>3) {
                 handpoints=5;highcard=straighthigh;
             }
-        else highcard= cards[0].rank; if (cards[1].rank>cards[0].rank) {highcard=cards[1].rank;}
+        else highcard= cards.get(0).rank; if (cards.get(1).rank>cards.get(0).rank) {highcard=cards.get(1).rank;}
 
         }
 

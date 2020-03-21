@@ -7,7 +7,6 @@ import java.util.Random;
 public class Deck {
     public int deckCounter=0;
     Card cards[];
-    //String[] suits={"Clubs","Diam","Hearts","Spades "};      //lowest rank to highest
     String[] suits={"♣","♦","❤","♠"};      //found handy ascii symbols
     String[] ranks={"2","3","4","5","6","7","8","9","10","J","Q","K","A"};
 

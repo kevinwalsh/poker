@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kevpoker.logic.PokerGameLogic;
+import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.Game;
 
 public class PokerActivity extends AppCompatActivity implements OnClickListener {
@@ -234,9 +235,8 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
                         // TODO this assumes all players are in! later need to include a status check for bust players etc
                         // investigate if its possible for a "bust" player to win a pot
         for (int i = 0; i < mygame.players.length; i++) {
-            mygame.players[i].cards[0]= mygame.mydeck.dealnext();
-
-            mygame.players[i].cards[1] = mygame.mydeck.dealnext();
+            mygame.players[i].cards.add(mygame.mydeck.dealnext());
+            mygame.players[i].cards.add(mygame.mydeck.dealnext());
         }
         tvplayers.setText("Active Players: "+mygame.activeplayers);
     }
@@ -252,8 +252,8 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
 
     }
     public void setplayercards() {
-        tvcard6.setText(mygame.players[mygame.playerturn].cards[0].value);
-        tvcard7.setText(mygame.players[mygame.playerturn].cards[1].value);
+        tvcard6.setText(mygame.players[mygame.playerturn].cards.get(0).value);
+        tvcard7.setText(mygame.players[mygame.playerturn].cards.get(1).value);
         tvplayername.setText(mygame.players[mygame.playerturn].name);
         int[] f = getPlayerColors();
         tvplayername.setTextColor(f[mygame.playerturn]);
@@ -267,7 +267,7 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
     public void nextround(){
         //  ROUNDS:         (0) Pre-flop,   (1) Flop (x3)       (2) Turn        (3) River
         for (int i=0;i<mygame.players.length;i++){
-            System.out.println(String.format("player %d, name=%s,card1=%s, card2=%s",i,mygame.players[i].name,mygame.players[i].cards[0].value,mygame.players[i].cards[1].value));
+            System.out.println(String.format("player %d, name=%s,card1=%s, card2=%s",i,mygame.players[i].name,mygame.players[i].cards.get(0).value,mygame.players[i].cards.get(1).value));
         }
         roundcounter++;
         //mygame.call=0;        //thought this was a solution, but it led to (-)ve numbers with (call-callpaid) in 2nd rounds.
