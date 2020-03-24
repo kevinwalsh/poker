@@ -1,9 +1,8 @@
 package com.example.kevpoker.services;
 
-import com.example.kevpoker.model.Card;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ObjectService {
@@ -15,6 +14,14 @@ public class ObjectService {
         Object temp = obj[a];
         obj[a] = obj[b];
         obj[b] = temp;
+    }
+
+    public void swap(List<Object> obj, int a, int b){
+        /*Object temp = obj.get(a);
+        obj.set(a,obj.get(b));
+        obj.set(b,temp);
+    */
+        Collections.swap(obj,a,b);
     }
 
     public List<Object> ArrayToArrayList(Object[] obj){
