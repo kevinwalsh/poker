@@ -6,103 +6,129 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 
 public class debug extends AppCompatActivity implements View.OnClickListener {
 
-    int mycards[];
+    String[] ranks = new String[]{"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+    String[] suits = {"♣", "♦", "❤", "♠"};
+
+    //List<Card> selectedCards;
+    int[] mycards;
+    int players;
+    TextView tvPlayer;
+    TextView tvtablecards;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.debug);
-        int cards=getIntent().getIntExtra("cards",5);
-        mycards= new int[cards];          //just do 1 array of 52, easier to check for duplicates
+        players = getIntent().getIntExtra("players", 4);
+        // mycards = new int[players*2 + 5];    // if we were setting ALL playercards
+        mycards = new int[7];
 
-        for (int i=0;i>cards;i++){
-            mycards[i]=i;
-        }
-        System.out.println(String.format("got %d cards via intent",cards));
+        tvPlayer = (TextView) findViewById(R.id.tvplayers);
+        tvtablecards = (TextView) findViewById(R.id.tvtablecards);
 
-
-        EditText et1a= (EditText) findViewById(R.id.etcard1a);
-        EditText et1b= (EditText) findViewById(R.id.etcard1b);          //considering change to be 1x EditText, card 0-51
-        TextView tv1= (TextView) findViewById(R.id.tvcard1);
-
-        Button btable1= (Button) findViewById(R.id.bcard1);
-        Button btable2= (Button) findViewById(R.id.bcard2);
-        Button btable3= (Button) findViewById(R.id.bcard3);
-        Button btable4= (Button) findViewById(R.id.bcard4);
-        Button btable5= (Button) findViewById(R.id.bcard5);
-        btable1.setOnClickListener(this);
-        btable2.setOnClickListener(this);
-        btable3.setOnClickListener(this);
-        btable4.setOnClickListener(this);
-        btable5.setOnClickListener(this);
-
-        Button shuffle = (Button) findViewById(R.id.bshuffle);
-        Button finish = (Button) findViewById(R.id.bfinish);
-        Button straight= (Button) findViewById(R.id.straight);
+        Button straight = (Button) findViewById(R.id.straight);
         Button flush = (Button) findViewById(R.id.flush);
         Button flush2 = (Button) findViewById(R.id.flush2);
-        Button fullhouse= (Button) findViewById(R.id.fullhouse);
-        Button fourkind= (Button) findViewById(R.id.fourkind);
-        shuffle.setOnClickListener(this);
-        finish.setOnClickListener(this);
+        Button fullhouse = (Button) findViewById(R.id.fullhouse);
+        Button fourkind = (Button) findViewById(R.id.fourkind);
+        Button twotriple = (Button) findViewById(R.id.twotriple_fullhouse);
+        Button onetriple = (Button) findViewById(R.id.onetriple);
+        Button twopair = (Button) findViewById(R.id.twopair);
+        Button onepair = (Button) findViewById(R.id.onepair);
+        Button straightflush = (Button) findViewById(R.id.straightflush);
+        Button royalstraight = (Button) findViewById(R.id.royalstraight);
+        Button bReset = (Button) findViewById(R.id.bReset);
+        Button finish = (Button) findViewById(R.id.bfinish);
         straight.setOnClickListener(this);
         flush.setOnClickListener(this);
         flush2.setOnClickListener(this);
         fullhouse.setOnClickListener(this);
         fourkind.setOnClickListener(this);
+        twotriple.setOnClickListener(this);
+        onetriple.setOnClickListener(this);
+        twopair.setOnClickListener(this);
+        onepair.setOnClickListener(this);
+        straightflush.setOnClickListener(this);
+        royalstraight.setOnClickListener(this);
+        bReset.setOnClickListener(this);
+        finish.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-                            // TODO: fix index out of bounds exception
-                            // this used to work; setting 5x drawn cards + 2x player1 cards.
-                            // need to investigate later
+        // TODO: fix index out of bounds exception
+        // this used to work; setting 5x drawn cards + 2x player1 cards.
+        // need to investigate later
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.straight:
-                mycards[0]=4;            mycards[1]=33;
-                mycards[2]=18;            mycards[3]=50;
-                mycards[4]=51;            mycards[5]=19;
-                mycards[6]=34;          //careful! must insert these later in deck! the 2x (playernum) cards come first always!
+                mycards = new int[]{4, 33, 18, 50, 51, 19, 34};
                 break;
             case R.id.flush:
-                mycards[0]=2;            mycards[1]=12;
-                mycards[2]=18;            mycards[3]=50;
-                mycards[4]=7;            mycards[5]=5;
-                mycards[6]=11;
+                mycards = new int[]{2, 12, 18, 50, 7, 5, 11};
                 break;
             case R.id.flush2:
-                mycards[0]=2;            mycards[1]=14;
-                mycards[2]=18;            mycards[3]=50;
-                mycards[4]=7;            mycards[5]=5;
-                mycards[6]=11;
+
+                mycards = new int[]{2, 14, 18, 6, 7, 5, 11};
                 break;
             case R.id.fullhouse:
-                mycards[0]=2;            mycards[1]=9;
-                mycards[2]=18;            mycards[3]=50;
-                mycards[4]=28;            mycards[5]=22;
-                mycards[6]=15;
+                mycards = new int[]{2, 9, 18, 50, 28, 22, 15};
+                break;
+           case R.id.twotriple_fullhouse:
+                mycards = new int[] {0,1,10,13,26,23,36};
+                break;
+           case R.id.onetriple:
+                mycards = new int[]  {0,1,10,13,26,29,9};
+                break;
+           case R.id.twopair:
+                mycards = new int[] {0,1,10,13,14,28,30};
+                break;
+           case R.id.onepair:
+                mycards = new int[] {3,9,10,13,16,28,30};
+                break;
+
+           case R.id.straightflush:
+                mycards = new int[] {2,3,4,6,10,5,20};
+                break;
+           case R.id.royalstraight:
+                mycards= new int[] {51,50,48,49,33,1,47};
                 break;
             case R.id.fourkind:
-                mycards[0]=0;            mycards[1]=13;
-                mycards[2]=18;            mycards[3]=50;
-                mycards[4]=51;            mycards[5]=39;
-                mycards[6]=26;
+                mycards = new int[]{0, 13, 18, 50, 51, 39, 26};
+                break;
+            case R.id.bReset:
+                mycards = new int[]{0, 1, 2, 3, 4, 5, 6};
                 break;
             case R.id.bfinish:
-                Intent myintent= new Intent();
-                myintent.putExtra("cards",mycards);
-
-                setResult(RESULT_OK,myintent);
+                Intent myintent = new Intent();
+                if (mycards == null) {
+                    mycards = new int[]{0, 1, 2, 3, 4, 5, 6};
+                }
+                myintent.putExtra("cards", mycards);
+                setResult(RESULT_OK, myintent);
                 finish();
                 break;
+
         }
+        CardValsToTextViews(mycards);
+
+
     }
 
-
+    private void CardValsToTextViews(int[] cards) {
+        String p = "Player 1: \t";
+        String t = "Table:\t";
+        for (int i = 0; i < 2; i++) {
+            p += ranks[cards[i] % 13] + suits[cards[i] / 13] + ", ";
+        }
+        for (int i = 2; i < cards.length; i++) {
+            t += ranks[cards[i] % 13] + suits[cards[i] / 13] + ", ";
+        }
+        tvPlayer.setText(p);
+        tvtablecards.setText(t);
+    }
 }

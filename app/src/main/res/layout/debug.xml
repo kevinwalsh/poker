@@ -15,248 +15,149 @@
     android:layout_height="wrap_content"
     android:text="DEBUG SCREEN" />
 
-    <EditText
-        android:id="@+id/etcard1a"
+    <RelativeLayout
+        android:id="@+id/rl_left"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/debug"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <EditText
-        android:id="@+id/etcard1b"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        >
+        <Button
+            android:id="@+id/straight"
+            android:text="Straight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/flush"
+            android:text="Flush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/straight"
+            />
+
+        <Button
+            android:id="@+id/flush2"
+            android:text="Flush (#2)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/flush"
+            />
+        <Button
+            android:id="@+id/fourkind"
+            android:text="4ofaKind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/flush2"
+            />
+        <Button
+            android:id="@+id/fullhouse"
+            android:text="FullHouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fourkind"
+            />
+        <Button
+            android:id="@+id/twotriple_fullhouse"
+            android:text="TwoTriple \n(Fullhouse)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fullhouse"
+            />
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/debug"
-        android:layout_toRightOf="@+id/etcard1a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <Button
-        android:id="@+id/bcard1"
-        android:text="Set table1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/debug"
-        android:layout_toRightOf="@id/etcard1b"/>
+        android:layout_height="match_parent"
+        android:id="@+id/rl_right"
+        android:gravity="right"
+        android:padding="20dp"
+        android:layout_toRightOf="@id/rl_left">
+
+
+        <Button
+            android:id="@+id/onetriple"
+            android:text="OneTriple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/twopair"
+            android:text="TwoPair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/onetriple"
+            />
+        <Button
+            android:id="@+id/onepair"
+            android:text="OnePair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/twopair"
+            />
+        <Button
+            android:id="@+id/straightflush"
+            android:text="StraightFlush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/onepair"
+            />
+        <Button
+            android:id="@+id/royalstraight"
+            android:text="RoyalStraight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/straightflush"
+            />
+        <Button
+            android:id="@+id/bReset"
+            android:text="Reset/Re-order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/royalstraight"
+            />
+    </RelativeLayout>
+
     <TextView
-        android:id="@+id/tvcard1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="N/A"
-        android:padding="5dp"
-        android:paddingLeft="20dp"
+        android:text="Player cards"
         android:textSize="20dp"
-        android:layout_below="@id/debug"
-        android:layout_toRightOf="@id/bcard1"/>
-
-    <EditText
-        android:id="@+id/etcard2a"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard1a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <EditText
-        android:id="@+id/etcard2b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard1a"
-        android:layout_toRightOf="@+id/etcard2a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <Button
-        android:id="@+id/bcard2"
-        android:text="Set table2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/etcard1a"
-        android:layout_toRightOf="@id/etcard2b"/>
+        android:paddingTop="20dp"
+        android:id="@+id/playerlabel"
+        android:layout_above="@id/tvplayers">
+    </TextView>
     <TextView
-        android:id="@+id/tvcard2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/tvplayers"
+        android:textSize="20dp"
         android:text="N/A"
-        android:padding="5dp"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:layout_below="@id/etcard1a"
-        android:layout_toRightOf="@id/bcard2"/>
-
-    <EditText
-        android:id="@+id/etcard3a"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard2a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <EditText
-        android:id="@+id/etcard3b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard2a"
-        android:layout_toRightOf="@+id/etcard3a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <Button
-        android:id="@+id/bcard3"
-        android:text="Set table3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/etcard2a"
-        android:layout_toRightOf="@id/etcard3b"/>
+        android:layout_above="@id/tablelabel">
+    </TextView>
     <TextView
-        android:id="@+id/tvcard3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="N/A"
-        android:padding="5dp"
-        android:paddingLeft="20dp"
+        android:id="@+id/tablelabel"
         android:textSize="20dp"
-        android:layout_below="@id/etcard2a"
-        android:layout_toRightOf="@id/bcard3"/>
-
-    <EditText
-        android:id="@+id/etcard4a"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard3a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <EditText
-        android:id="@+id/etcard4b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard3a"
-        android:layout_toRightOf="@+id/etcard4a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <Button
-        android:id="@+id/bcard4"
-        android:text="Set table4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/etcard3a"
-        android:layout_toRightOf="@id/etcard4b"/>
+        android:text="Table cards"
+        android:layout_above="@id/tvtablecards">
+    </TextView>
     <TextView
-        android:id="@+id/tvcard4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/tvtablecards"
+        android:textSize="20dp"
         android:text="N/A"
-        android:padding="5dp"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:layout_below="@id/etcard3a"
-        android:layout_toRightOf="@id/bcard4"/>
+        android:layout_above="@id/bfinish">
+    </TextView>
 
-    <EditText
-        android:id="@+id/etcard5a"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard4a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <EditText
-        android:id="@+id/etcard5b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard4a"
-        android:layout_toRightOf="@+id/etcard5a"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:inputType="number"
-        android:text="0"/>
-    <Button
-        android:id="@+id/bcard5"
-        android:text="Set table5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/etcard4a"
-        android:layout_toRightOf="@id/etcard5b"/>
-    <TextView
-        android:id="@+id/tvcard5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="N/A"
-        android:padding="5dp"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
-        android:layout_below="@id/etcard4a"
-        android:layout_toRightOf="@id/bcard5"/>
-
-
-    <Button
-        android:id="@+id/straight"
-        android:text="StraightPreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/etcard5a"
-        />
-    <Button
-        android:id="@+id/flush"
-        android:text="FlushPreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/straight"
-        />
-    <Button
-        android:id="@+id/flush2"
-        android:text="FlushPreset -1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/straight"
-        android:layout_toRightOf="@id/flush"
-        />
-    <Button
-        android:id="@+id/fullhouse"
-        android:text="FullHousePreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/flush"
-        />
-    <Button
-        android:id="@+id/fourkind"
-        android:text="4ofaKindPreset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fullhouse"
-        />
-
-
-    <Button
-        android:id="@+id/bshuffle"
-        android:text="Shuffle All, return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"/>
     <Button
         android:id="@+id/bfinish"
         android:text="Finished Deck Edit"
+        android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:padding="30dp"
         android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/bshuffle"/>
-
+        />
 </RelativeLayout>

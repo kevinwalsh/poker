@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.kevpoker.logic.PokerGameLogic;
 import com.example.kevpoker.model.Card;
+import com.example.kevpoker.model.Deck;
 import com.example.kevpoker.model.Game;
 import com.example.kevpoker.model.Player;
 import com.example.kevpoker.services.ConsolePrintService;
@@ -74,13 +75,7 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
 
-      //  dealplayers();
-      //  setcards();       //should be done by NEWGAME! and newgame should be written properly for reuse
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
+        // CreateGame & shuffle in OnCreate! otherwise going to debug will reset game
         Bundle b= getIntent().getExtras();
         if(b==null){
             // issue if app started from here instead of lobby
@@ -89,6 +84,14 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         names=b.getStringArray("names");
         numplayers=names.length;
         mygame=new Game(this, numplayers,b.getStringArray("names"),b.getIntArray("chips"));
+        mygame.CreateNewTable();
+        mygame.StartFirstRound();
+      }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
         setTableCards();
         setplayercards();
     }
@@ -116,26 +119,14 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         setTableCards();
         setplayercards();
 
-
     }
 
-    public void endoldgame(){
+    public void EndOldTableGame_StartNew(){
         mygame.EndOldGame();
+        mygame.CreateNewTable();
+        mygame.StartFirstRound();
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode== RESULT_OK) {
-            endoldgame();           //had to split "new game/ redeal" into 2 parts. shuffle, THEN do debug, FINALLY deal out cards
-
-            int chosencards[]=data.getIntArrayExtra("cards");
-            System.out.println("got result from activity result");
-
-            // TODO handle "debug" scenario setting
-        }
-    }
 
     public void setTableCards(){
         List<Card> tblcards = mygame.table.tablecards;
@@ -193,13 +184,25 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
 //                break;
             case R.id.debug:
                 Intent i2 = new Intent("com.example.kevpoker.DEBUG");
-               startActivity(i2);
+                i2.putExtra("players", mygame.players.size());
+                startActivityForResult(i2,1);
                 break;
             case R.id.exitapp:
                 finish();
                 break;
         }
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode== RESULT_OK) {
+            int chosencards[]=data.getIntArrayExtra("cards");
+
+            mygame.RearrangeDeck(chosencards);
+            mygame.ReplaceCards();          // takeback currently dealt cards & replace w/ debug cards
+        }
     }
 
     public int[] getPlayerColors(){

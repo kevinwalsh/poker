@@ -20,7 +20,7 @@ public class Deck {
         }
     }
     public Card dealnext(){
-        return cards.remove(1);
+        return cards.remove(0);
     }
 
 

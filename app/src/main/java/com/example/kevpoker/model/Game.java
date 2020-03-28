@@ -6,6 +6,7 @@ import com.example.kevpoker.logic.PokerScoreCountLogic;
 import com.example.kevpoker.services.ConsolePrintService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,69 +25,53 @@ public class Game {
                         // need context for toast msgs
         mydeck = new Deck();
         activityContext = context;
-        cps= new ConsolePrintService();
+        cps= new ConsolePrintService();              //breaking debug unit tests
 
         players = new ArrayList<Player>();
         for (int i=0;i<numplayers;i++){
             players.add(new Player(names[i], chips[i]));
         }
-        NewRound_CreateTable(players,mydeck);
     }
 
-    //  ------- REFACTORING START -----------
-
-
-        /*
-        resetActivePlayers
-        initTable?
-        checkactiveplayers-> easier for table
-
-        REMOVING
-            nextplayer- >   table probably
-            sortcards   -> nothing to do with here i think
-            calcpoints -> to table, call logic class
-            checkwinnernew -> to table, call logic class
-                potwinner   - related to above
-            printscores -> table to print service
-            addtopot, reset, dealerblinds
-
-        */
-
-
-        public void NewRound_CreateTable(List<Player> players, Deck mydeck){
-                //TODO , and pass in only active players
-            EnsureDeckIsFull(mydeck);
-            gameCounter++;
-            List<Player> activePlayers = new ArrayList<Player>();
-            for (Player p : players){
-                if(p.playerstatus == "ACTIVE"){activePlayers.add(p);}
-            }
-
-            gameDealer++;
-            gameDealer= gameDealer%activePlayers.size();    // need to account for looping
-            table = new Table(mydeck, activePlayers,blind,gameDealer, this);
-            table.deck.shuffle();
-            table.nextRound();
+    public void CreateNewTable(){
+        EnsureDeckIsFull(mydeck);
+        gameCounter++;
+        List<Player> activePlayers = new ArrayList<Player>();
+        for (Player p : players){
+            if(p.playerstatus == "ACTIVE"){activePlayers.add(p);}
         }
+        gameDealer++;
+        gameDealer= gameDealer%activePlayers.size();    // need to account for looping
 
-        public void EnsureDeckIsFull(Deck deck){
-            if(deck.cards.size() != 52){
-                throw new RuntimeException("KW_DeckMissingCardsException");
-            }
+        table = new Table(mydeck, activePlayers,blind,gameDealer, this);
+   }
+
+    public void StartFirstRound(){
+        ShuffleCards();
+        table.nextRound();      //  Deal cards to players
+    }
+
+    public void ShuffleCards(){
+        table.deck.shuffle();
+    }
+
+    public void EnsureDeckIsFull(Deck deck){
+        if(deck.cards.size() != 52){
+            throw new RuntimeException("KW_DeckMissingCardsException");
         }
+    }
 
-        public void EndOldGame(){
-            System.out.println("ending old game");
-            cps.toastmessage("End of round " + gameCounter, activityContext);
-            cps.AlertDialogBox("Game Over", "end of old game",
-                    "ok","cool",activityContext);
+    public void EndOldGame(){
+        System.out.println("ending old game");
+        cps.toastmessage("End of round " + gameCounter, activityContext);
+        cps.AlertDialogBox("Game Over", "end of old game",
+                "ok","cool",activityContext);
 
-            ResetActivePlayers();
-            CleanupTable();
-            NewRound_CreateTable(players, mydeck);
+        ResetActivePlayers();
+        CollectCardsFromTable();
+    }
 
-        }
-    public void CleanupTable(){
+    public void CollectCardsFromTable(){
         mydeck.cards.addAll(table.tablecards);      //table deleted anyway, dont need to clear list
         for(Player p : table.players){
             mydeck.cards.addAll(p.cards);
@@ -138,6 +123,38 @@ public class Game {
         System.out.println(msg);
        // cps.toastmessage(msg,activityContext);                // breaks unittests, not mocked
         return isSidepot_remaining;
+    }
+
+    public void RearrangeDeck(int[] cardindexes){
+            // for simplicity, debug only gives 7 cards (tablecards + player1)
+                    // Therefore will need to skip 2x (N) other players
+        mydeck = new Deck();
+        table.deck = mydeck;        // re-link deck
+        List<Card> chosenCards = new ArrayList<>();
+        int [] orderedindexes = cardindexes.clone();
+        Arrays.sort(orderedindexes);        // sort & remove highest->lowest, to preserve ordering
+
+        for(int i=cardindexes.length-1;i>=0;i--){        // copy cards in desired order
+            chosenCards.add(0,mydeck.cards.get(cardindexes[i]));
+        }
+        for(int i=orderedindexes.length-1;i>=0;i--){     // remove original cards in descending order
+            mydeck.cards.remove(orderedindexes[i]);
+        }
+        mydeck.shuffle();
+        mydeck.cards.addAll(0,chosenCards.subList(0,2)); //  re-add players at start of deck
+        mydeck.cards.addAll(table.players.size()*2, chosenCards.subList(2,7));  // add tablecards later
+    }
+    public void ReplaceCards(){
+            for(Player p: table.players){
+                p.cards.clear();
+                p.cards.add(mydeck.dealnext());
+                p.cards.add(mydeck.dealnext());
+            }
+            int t = table.tablecards.size();
+            table.tablecards.clear();
+            for(int i=0;i<t;i++){
+                table.tablecards.add(mydeck.dealnext());
+            }
     }
 
 }
