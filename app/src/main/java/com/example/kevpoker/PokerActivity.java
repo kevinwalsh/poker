@@ -102,7 +102,12 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         switch(v.getId()) {
 
             case R.id.b1:       //raise
-                mygame.table.Raise(mygame.table.getCurrentPlayer());
+                boolean canraise = mygame.table.Raise(mygame.table.getCurrentPlayer());
+                if (!canraise) {
+                    ConsolePrintService cps = new ConsolePrintService();
+                    cps.toastmessage("ERROR: not enough chips to raise", this);
+                }
+                    // dont even need returned boolean, as nextPlayer is inside table.raise().call(), inside if/else
                 break;
             case R.id.b2:       //call
                 mygame.table.Call(mygame.table.getCurrentPlayer());
@@ -148,7 +153,7 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         tvplayername.setTextColor(f[mygame.table.playerTurn]);
 
         tvpot.setText("Table call: "+mygame.table.call);
-        tvplayerchips.setText("Chips: "+p.chips);
+        tvplayerchips.setText("Chips: "+(p.chips - p.callpaid));
         tvchipstocall.setText("Chips req'd to call: " +
                 Integer.toString(mygame.table.call - p.callpaid)
             );
@@ -200,7 +205,7 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         if(resultCode== RESULT_OK) {
             int chosencards[]=data.getIntArrayExtra("cards");
 
-            mygame.RearrangeDeck(chosencards);
+            mygame.RearrangeDeck(chosencards);      //sep2020- should move to debug
             mygame.ReplaceCards();          // takeback currently dealt cards & replace w/ debug cards
         }
     }

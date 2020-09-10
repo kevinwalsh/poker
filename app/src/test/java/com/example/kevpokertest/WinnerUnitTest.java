@@ -1,5 +1,6 @@
 package com.example.kevpokertest;
 
+import com.example.kevpoker.logic.PokerBetLogic;
 import com.example.kevpoker.logic.PokerScoreCountLogic;
 import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.Game;
@@ -22,12 +23,13 @@ public class WinnerUnitTest {
     public void SimpleWinner() throws Exception {
         Game game = new Game(null,2,
                 new String[]{"player1","player2"},new int[]{100,100});
+        PokerBetLogic pbl = new PokerBetLogic();
         game.players.get(0).handScore = new PokerHandScore(2,5,-1);
         game.players.get(1).handScore = new PokerHandScore(7,5,-1);
         game.players.get(0).callpaid=10;
         game.players.get(1).callpaid=10;
-        game.PayoutWinningsAll(game.players);
 
+        pbl.PayoutWinningsAll(game.players);
         assertEquals(game.players.get(0).name, "player2");
                                     // "sorting by winner" has sideeffect here of reordering list
         assertEquals(game.players.get(1).name, "player1");
@@ -39,6 +41,7 @@ public class WinnerUnitTest {
     public void SimpleWinner_4players() throws Exception {
         Game game = new Game(null,4,
                 new String[]{"player1","player2","p3","p4"},new int[]{100,100,100,100});
+        PokerBetLogic pbl = new PokerBetLogic();
         game.players.get(0).handScore = new PokerHandScore(5,5,-1);
         game.players.get(1).handScore = new PokerHandScore(7,5,-1);
         game.players.get(2).handScore = new PokerHandScore(4,5,-1);
@@ -47,7 +50,7 @@ public class WinnerUnitTest {
         game.players.get(1).callpaid=10;
         game.players.get(2).callpaid=10;
         game.players.get(3).callpaid=10;
-        game.PayoutWinningsAll(game.players);
+        pbl.PayoutWinningsAll(game.players);
 
         assertEquals(game.players.get(0).name, "player2");
         assertEquals(game.players.get(1).name, "player1");
@@ -61,6 +64,7 @@ public class WinnerUnitTest {
     public void SidepotWinner() throws Exception {
         Game game = new Game(null,4,
                 new String[]{"player1","player2","p3","p4"},new int[]{100,25,100,100});
+        PokerBetLogic pbl = new PokerBetLogic();
         game.players.get(0).handScore = new PokerHandScore(5,5,-1);
         game.players.get(1).handScore = new PokerHandScore(7,5,-1);
         game.players.get(2).handScore = new PokerHandScore(4,5,-1);
@@ -69,7 +73,7 @@ public class WinnerUnitTest {
         game.players.get(1).callpaid=25;
         game.players.get(2).callpaid=50;
         game.players.get(3).callpaid=50;
-        game.PayoutWinningsAll(game.players);
+        pbl.PayoutWinningsAll(game.players);
 
         assertEquals(game.players.get(0).name, "player2");
         assertEquals(game.players.get(1).name, "player1");
@@ -82,6 +86,7 @@ public class WinnerUnitTest {
     @Test
     public void FoldedPlayer() throws Exception {Game game = new Game(null,4,
             new String[]{"player1","player2","p3","p4"},new int[]{100,100,100,100});
+        PokerBetLogic pbl = new PokerBetLogic();
         game.players.get(0).handScore = new PokerHandScore(5,5,-1);
         game.players.get(1).handScore = new PokerHandScore(7,5,-1);
         game.players.get(2).handScore = new PokerHandScore(4,5,-1);
@@ -91,7 +96,7 @@ public class WinnerUnitTest {
         game.players.get(2).callpaid=10;
         game.players.get(2).playerstatus="FOLD";
         game.players.get(3).callpaid=50;
-        game.PayoutWinningsAll(game.players);
+        pbl.PayoutWinningsAll(game.players);
 
         assertEquals(game.players.get(0).name, "player2");
         assertEquals(game.players.get(1).name, "player1");

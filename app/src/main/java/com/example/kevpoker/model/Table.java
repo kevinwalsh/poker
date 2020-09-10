@@ -65,8 +65,10 @@ public class Table {
                 ConsolePrintService cps = new ConsolePrintService();
                 cps.PrintScores(players,tablecards);
 
-                game.PayoutWinningsAll(players);
+                pokerBetLogic.PayoutWinningsAll(players);
                 game.EndOldGame();
+                game.CreateNewTable();
+                game.StartFirstRound();
                 endGame= true;        // tell game to calc points and start new table?
                 break;
         }
@@ -101,13 +103,17 @@ public class Table {
         }
     }
 
-    public void Raise(Player p, int raiseBy){
-        call+=raiseBy;
-        callcounter=0;
-        Call(p);
+    public boolean Raise(Player p, int raiseBy){
+        if(p.chips>=call + raiseBy) {
+            call += raiseBy;
+            callcounter = 0;
+            Call(p);
+            return true;
+        }
+        else return false;
     }
-    public void Raise(Player p){        // default 10chips raise if none specified
-        Raise(p, 10);
+    public boolean Raise(Player p){        // default 10chips raise if none specified
+       return Raise(p, 10);
     }
 
     public void Fold(Player p){
