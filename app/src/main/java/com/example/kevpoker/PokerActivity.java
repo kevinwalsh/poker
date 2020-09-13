@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.example.kevpoker.logic.PokerGameLogic;
 import com.example.kevpoker.model.Card;
-import com.example.kevpoker.model.Deck;
 import com.example.kevpoker.model.Game;
 import com.example.kevpoker.model.Player;
 import com.example.kevpoker.services.ConsolePrintService;
+import com.example.kevpoker.services.DebugService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +132,7 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         mygame.StartFirstRound();
     }
 
-
+                // keep for now, purely display
     public void setTableCards(){
         List<Card> tblcards = mygame.table.tablecards;
         for(int i = 0; i < tblcards.size(); i++){
@@ -205,8 +205,8 @@ public class PokerActivity extends AppCompatActivity implements OnClickListener 
         if(resultCode== RESULT_OK) {
             int chosencards[]=data.getIntArrayExtra("cards");
 
-            mygame.RearrangeDeck(chosencards);      //sep2020- should move to debug
-            mygame.ReplaceCards();          // takeback currently dealt cards & replace w/ debug cards
+            DebugService dbsvc = new DebugService();
+            dbsvc.DebugReplaceCards(chosencards,mygame);
         }
     }
 

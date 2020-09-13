@@ -31,7 +31,7 @@ public class PokerBetLogic {
 
    //------------------- payouts
    public void PayoutWinningsAll(List<Player> activePlayers){
-       Collections.sort(activePlayers, Player.getPointsComparator());
+       Collections.sort(activePlayers, PokerHandCalculatorLogic.getPointsComparator());
        boolean sidePotRemaining = true;
        for(Player p : activePlayers){
            if(sidePotRemaining) {
@@ -45,7 +45,7 @@ public class PokerBetLogic {
         int winner_callpaid = winner.callpaid;   // need temp value, as for this algo, winner will also "payout"
         boolean isSidepot_remaining = false;
         for(Player p:activePlayers){
-            int win = p.Payout(winner_callpaid);       // winners call OR whatever player paid in
+            int win = Payout(winner_callpaid,p);       // winners call OR whatever player paid in
             winner.chips+=win;      // cant do in 1 line as it keeps "old" chips val for winner
 
             if(p.callpaid > 0) {         // after winner takes their share; is anything still in pot
@@ -56,6 +56,28 @@ public class PokerBetLogic {
         System.out.println(msg);
         // cps.toastmessage(msg,activityContext);                // breaks unittests, not mocked
         return isSidepot_remaining;
+    }
+
+
+    public int Payout(int winnerCall, Player player){
+        int payout=0;
+        if(winnerCall >= player.callpaid){        // only take what player has IF lessthan winner
+            int temp = player.callpaid;
+            player.chips -= temp;
+            player.callpaid-= temp;
+            payout = temp;
+        }
+        else {
+            player.chips-=winnerCall;
+            player.callpaid-= winnerCall;
+            payout = winnerCall;
+        }
+        if(player.chips<=0){
+            player.playerstatus = "BUST";
+            System.out.println("Player "+ player.name + " gone BUST");
+            // TODO change to onscreen alert later
+        }
+        return payout;
     }
 
 }

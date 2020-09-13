@@ -1,9 +1,5 @@
 package com.example.kevpoker.model;
 
-import java.util.Comparator;
-import java.util.List;
-
-
 public class PokerHandScore {
     public int handType;
     public int primaryRank;         // cardrank, EXCEPT flush, will be suit

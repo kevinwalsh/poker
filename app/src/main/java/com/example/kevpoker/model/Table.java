@@ -132,4 +132,8 @@ public class Table {
         return players.get(playerTurn);
     }
 
+    public int GetRemainingPlayerCount(){
+        return remainingPlayers;
+    }
+
 }

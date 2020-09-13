@@ -4,8 +4,6 @@ import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.PokerHandScore;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PokerScoreCountLogic {
@@ -18,14 +16,8 @@ public class PokerScoreCountLogic {
     }
 
 
-    //public PokerHandScore checkPoints(Card[] tablecards, Card[] playercards){
     public PokerHandScore checkPoints(List<Card> tablecards, List<Card> playercards){
-        //List<Card> allcards = convertCardArrayToList(tablecards,playercards);
         List<Card> allcards = new ArrayList<>(tablecards); allcards.addAll(playercards);  //shallow copy
-
-        //sortCardsByRank(allcards);
-
-
         PokerHandScore pairsEtc= phcl.CheckPairsEtc(allcards);
         PokerHandScore straightCheck = phcl.CheckForStraight(allcards);
 
@@ -59,20 +51,5 @@ public class PokerScoreCountLogic {
                     playercards.get(0).rank : playercards.get(1).rank;
             return new PokerHandScore(1, highcard, -1);
         }
-
-//        return null;
     }
-    /*
-    private List<Card> convertCardArrayToList(Card[] tablecards, Card[] playercards){
-        List<Card> allcards = new ArrayList<Card>( Arrays.asList(tablecards));
-        allcards.add(playercards[0]);
-        allcards.add(playercards[1]);
-        return allcards;
-    }
-*/
-    /*
-    private void sortCardsByRank(List<Card> cards){
-        Collections.sort(cards, Card.getCardComparator_Rank());
-    }
-*/
 }

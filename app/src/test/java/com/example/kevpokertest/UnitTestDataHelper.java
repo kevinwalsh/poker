@@ -6,10 +6,6 @@ import com.example.kevpoker.model.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */

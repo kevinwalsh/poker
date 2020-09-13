@@ -1,13 +1,46 @@
 package com.example.kevpoker.logic;
 
 import com.example.kevpoker.model.Card;
+import com.example.kevpoker.model.Player;
 import com.example.kevpoker.model.PokerHandScore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PokerHandCalculatorLogic {
+
+    // ------------------------------- Player Hand Comparator
+    public static Comparator<Player> getPointsComparator(){
+        return HandPointComparator;
+    }
+
+    static Comparator HandPointComparator = new Comparator<Player>() {
+        @Override
+        public int compare(Player o1, Player o2) {
+            // Chaining multiple parameters: handpoints, if(equal) {check primary highcard etc}
+            boolean samehandtype = o1.handScore.handType == o2.handScore.handType ? true : false;
+            if(samehandtype){
+                boolean sameprimary = o1.handScore.primaryRank == o2.handScore.primaryRank ? true: false;
+                if (sameprimary) {
+                    return o1.handScore.handType<o2.handScore.secondaryRank ?
+                            1 :o1.handScore.secondaryRank== o2.handScore.secondaryRank ?
+                            0 : -1;
+                }
+                else {
+                    return o1.handScore.handType < o2.handScore.handType ?
+                            1 : o1.handScore.handType == o2.handScore.handType ?
+                            0 : -1;
+                }
+            }
+            return o1.handScore.handType < o2.handScore.handType ?
+                    1 : o1.handScore.handType == o2.handScore.handType ?
+                    0 : -1;
+        }
+    };
+
+    //-------------------------------------------- Main
 
     public PokerHandScore CheckForFlush(List<Card> cards) {
         List<Card> temp = cards;

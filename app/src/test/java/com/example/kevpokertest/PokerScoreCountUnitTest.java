@@ -1,6 +1,5 @@
 package com.example.kevpokertest;
 
-import com.example.kevpoker.logic.PokerHandCalculatorLogic;
 import com.example.kevpoker.logic.PokerScoreCountLogic;
 import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.PokerHandScore;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.

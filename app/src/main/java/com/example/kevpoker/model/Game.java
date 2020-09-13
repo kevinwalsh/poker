@@ -6,8 +6,6 @@ import com.example.kevpoker.logic.PokerScoreCountLogic;
 import com.example.kevpoker.services.ConsolePrintService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Game {
@@ -73,6 +71,7 @@ public class Game {
 
     public void CollectCardsFromTable(){
         mydeck.cards.addAll(table.tablecards);      //table deleted anyway, dont need to clear list
+        table.tablecards.clear();
         for(Player p : table.players){
             mydeck.cards.addAll(p.cards);
             p.cards.clear();
@@ -96,39 +95,4 @@ public class Game {
         }
         return true;
     }
-
-
-
-    public void RearrangeDeck(int[] cardindexes){
-            // for simplicity, debug only gives 7 cards (tablecards + player1)
-                    // Therefore will need to skip 2x (N) other players
-        mydeck = new Deck();
-        table.deck = mydeck;        // re-link deck
-        List<Card> chosenCards = new ArrayList<>();
-        int [] orderedindexes = cardindexes.clone();
-        Arrays.sort(orderedindexes);        // sort & remove highest->lowest, to preserve ordering
-
-        for(int i=cardindexes.length-1;i>=0;i--){        // copy cards in desired order
-            chosenCards.add(0,mydeck.cards.get(cardindexes[i]));
-        }
-        for(int i=orderedindexes.length-1;i>=0;i--){     // remove original cards in descending order
-            mydeck.cards.remove(orderedindexes[i]);
-        }
-        mydeck.shuffle();
-        mydeck.cards.addAll(0,chosenCards.subList(0,2)); //  re-add players at start of deck
-        mydeck.cards.addAll(table.players.size()*2, chosenCards.subList(2,7));  // add tablecards later
-    }
-    public void ReplaceCards(){
-            for(Player p: table.players){
-                p.cards.clear();
-                p.cards.add(mydeck.dealnext());
-                p.cards.add(mydeck.dealnext());
-            }
-            int t = table.tablecards.size();
-            table.tablecards.clear();
-            for(int i=0;i<t;i++){
-                table.tablecards.add(mydeck.dealnext());
-            }
-    }
-
 }

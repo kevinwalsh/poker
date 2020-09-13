@@ -2,6 +2,8 @@ package com.example.kevpokertest;
 
 import com.example.kevpoker.model.Card;
 import com.example.kevpoker.model.Game;
+import com.example.kevpoker.model.Player;
+import com.example.kevpoker.services.DebugService;
 
 import org.junit.Test;
 
@@ -24,7 +26,7 @@ public class DebugUnitTest {
     public void AssertDealtCards(int players, int[] debugCards, List<Card> dealtCards){
         assertEquals(debugCards.length, 7);
         assertEquals(dealtCards.size(), players*2 + 5);
-
+                // straight 4, 33, 18, 50, 51, 19, 34};
         assertEquals((dealtCards.get(0).suit*13 + dealtCards.get(0).rank), debugCards[0]);
         assertEquals((dealtCards.get(1).suit*13 + dealtCards.get(1).rank), debugCards[1]);
         assertEquals((dealtCards.get(players*2+0).suit*13 + dealtCards.get(players*2+0).rank), debugCards[2]);
@@ -40,13 +42,26 @@ public class DebugUnitTest {
         Game game = new Game(null,1,
                 new String[]{"player1"},new int[]{100});
         game.CreateNewTable();
+        game.table.nextRound();
 
         List<Card> dealtCards = new ArrayList<>();
-        game.RearrangeDeck(debug_straight);
+        DebugService dbsvc = new DebugService();
+        dbsvc.DebugReplaceCards(debug_straight,game);
+        //        game.RearrangeDeck(debug_straight);
 
-        for (int i=0;i<game.players.size()*2+5;i++){
-            dealtCards.add(game.mydeck.dealnext());
+//        for (int i=0;i<game.players.size()*2+5;i++){
+
+        /*
+        for (int i=0;i<5;i++){        // only deal table;     player redeal done in debug
+         dealtCards.add(game.mydeck.dealnext());
         }
+ */
+        //alt
+        game.table.nextRound();game.table.nextRound();game.table.nextRound();
+        for(Player pp : game.players){
+           dealtCards.addAll(pp.cards);
+        }
+        dealtCards.addAll(game.table.tablecards);
 
         AssertDealtCards(game.players.size(), debug_straight, dealtCards);
     }
@@ -57,13 +72,18 @@ public class DebugUnitTest {
         Game game = new Game(null,2,
                 new String[]{"player1","player2"},new int[]{100,100});
         game.CreateNewTable();
+        game.table.nextRound();
 
         List<Card> dealtCards = new ArrayList<>();
-        game.RearrangeDeck(debug_straight);
+        DebugService dbsvc = new DebugService();
+        dbsvc.DebugReplaceCards(debug_straight,game);
 
-        for (int i=0;i<game.players.size()*2+5;i++){
-            dealtCards.add(game.mydeck.dealnext());
+        game.table.nextRound();game.table.nextRound();game.table.nextRound();
+        for(Player pp : game.players){
+            dealtCards.addAll(pp.cards);
         }
+        dealtCards.addAll(game.table.tablecards);
+
 
         AssertDealtCards(game.players.size(), debug_straight, dealtCards);
     }
@@ -73,13 +93,17 @@ public class DebugUnitTest {
         Game game = new Game(null,2,
                 new String[]{"player1","player2"},new int[]{100,100});
         game.CreateNewTable();
+        game.table.nextRound();
 
         List<Card> dealtCards = new ArrayList<>();
-        game.RearrangeDeck(debug_flush);
+        DebugService dbsvc = new DebugService();
+        dbsvc.DebugReplaceCards(debug_flush,game);
 
-        for (int i=0;i<game.players.size()*2+5;i++){
-            dealtCards.add(game.mydeck.dealnext());
+        game.table.nextRound();game.table.nextRound();game.table.nextRound();
+        for(Player pp : game.players){
+            dealtCards.addAll(pp.cards);
         }
+        dealtCards.addAll(game.table.tablecards);
 
         AssertDealtCards(game.players.size(), debug_flush, dealtCards);
     }
@@ -89,13 +113,17 @@ public class DebugUnitTest {
         Game game = new Game(null,2,
                 new String[]{"player1","player2"},new int[]{100,100});
         game.CreateNewTable();
+        game.table.nextRound();
 
         List<Card> dealtCards = new ArrayList<>();
-        game.RearrangeDeck(debug_fullhouse);
+        DebugService dbsvc = new DebugService();
+        dbsvc.DebugReplaceCards(debug_fullhouse,game);
 
-        for (int i=0;i<game.players.size()*2+5;i++){
-            dealtCards.add(game.mydeck.dealnext());
+        game.table.nextRound();game.table.nextRound();game.table.nextRound();
+        for(Player pp : game.players){
+            dealtCards.addAll(pp.cards);
         }
+        dealtCards.addAll(game.table.tablecards);
 
         AssertDealtCards(game.players.size(), debug_fullhouse, dealtCards);
     }
@@ -106,13 +134,17 @@ public class DebugUnitTest {
         Game game = new Game(null,2,
                 new String[]{"player1","player2"},new int[]{100,100});
         game.CreateNewTable();
+        game.table.nextRound();
 
         List<Card> dealtCards = new ArrayList<>();
-        game.RearrangeDeck(debug_fourkind);
+        DebugService dbsvc = new DebugService();
+        dbsvc.DebugReplaceCards(debug_fourkind,game);
 
-        for (int i=0;i<game.players.size()*2+5;i++){
-            dealtCards.add(game.mydeck.dealnext());
+        game.table.nextRound();game.table.nextRound();game.table.nextRound();
+        for(Player pp : game.players){
+            dealtCards.addAll(pp.cards);
         }
+        dealtCards.addAll(game.table.tablecards);
 
         AssertDealtCards(game.players.size(), debug_fourkind, dealtCards);
     }

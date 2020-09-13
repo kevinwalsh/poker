@@ -6,8 +6,6 @@ public class Card {
     public String value;
     public int rank;
     public int suit;
-    //protected void onCreate (){
-    //}
 
     static Comparator rankComparator = new Comparator<Card>() {
         @Override
